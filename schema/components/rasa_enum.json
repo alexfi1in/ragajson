@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OpenRaga/ragajson/main/schema/components/rasa_enum.json",
+  "title": "RasaEnum",
+  "description": "Emotional associations (rasa) for raga: shringara, karuna, vira, etc.",
+  "type": "string",
+  "enum": [
+    "Shringara",
+    "Karuna",
+    "Vira",
+    "Shanta",
+    "Bhakti",
+    "Hasya",
+    "Adbhuta",
+    "Raudra",
+    "Bibhatsa",
+    "Bhayanaka"
+  ],
+  "examples": ["Shringara", "Karuna"]
+}

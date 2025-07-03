@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OpenRaga/ragajson/main/schema/components/system_enum.json",
+  "title": "SystemEnum",
+  "description": "Indian classical music system: Hindustani (North Indian) or Carnatic (South Indian) tradition.",
+  "type": "string",
+  "enum": ["Hindustani", "Carnatic"],
+  "examples": ["Hindustani", "Carnatic"]
+}

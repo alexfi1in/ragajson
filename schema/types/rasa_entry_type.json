@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OpenRaga/ragajson/main/schema/types/rasa_entry_type.json",
+  "title": "RasaEntryType",
+  "description": "Rasa entry with weight (intensity)",
+  "type": "object",
+  "properties": {
+    "rasa": {
+      "$ref": "https://raw.githubusercontent.com/OpenRaga/ragajson/main/schema/components/rasa_enum.json",
+      "description": "Name of the rasa"
+    },
+    "weight": {
+      "type": "number",
+      "description": "Weight (intensity) of this rasa, from 0 to 1",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": ["rasa", "weight"],
+  "additionalProperties": false
+}
