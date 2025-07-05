@@ -27,6 +27,28 @@ Raga information is scattered across books, websites, and oral traditions with n
 - **Flexibility**: Support for both Hindustani and Carnatic systems
 - **Extensibility**: Custom fields allowed with `x-` prefix
 
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Quick validation with visual feedback
+npm run validate
+
+# Run comprehensive tests
+npm test
+
+# Run quality checks specifically
+npm run test:schema-quality
+```
+
+**All schemas are validated with:**
+
+- ✅ Technical compliance tests
+- ✅ Quality standard tests
+- ✅ Real-time validation feedback
+
 ## Documentation
 
 - [Schema Reference](docs/) - Technical details
