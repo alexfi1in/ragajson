@@ -51,9 +51,23 @@ npm run test:schema-quality
 
 ## Documentation
 
-- [Schema Reference](docs/) - Technical details
-- [Testing Guide](docs/testing-guide.md) - Validation tools
-- [Examples](examples/) - Real raga data _(coming soon)_
+### 📖 [Complete Documentation](docs/index.md)
+
+- **[Schema Reference](docs/schema-reference/index.md)** - Generated API documentation from schemas
+- **[Main Schema](docs/schema-reference/raga.schema.md)** - Core RagaJSON specification
+- **[Components](docs/schema-reference/index.md#components)** - Enum definitions (systems, notes, etc.)
+- **[Types](docs/schema-reference/index.md#types)** - Complex object structures
+
+### 🛠️ Developer Resources
+
+- **[Testing Guide](docs/testing-guide.md)** - Comprehensive validation strategy
+- **[Why JSON Schema?](docs/why-json-schema.md)** - Design decisions and benefits
+- **[Examples](examples/)** - Real raga data _(coming soon)_
+
+### 🚀 Quick Links
+
+- Generate docs: `npm run docs:generate`
+- Clean docs: `npm run docs:clean`
 
 ---
 

@@ -1,0 +1,77 @@
+{{#if schema.deprecated}}⚠️ **DEPRECATED** - This schema has been marked as deprecated.
+
+{{/if}}{{#if schema.title}}# {{ schema.title }}{{else if schema.description}}# {{ schema.description }}{{else}}# Schema{{/if}}
+
+{{#if schema.title}}{{#if schema.description}}{{ schema.description }}
+
+{{/if}}{{/if}}**Schema Information:**
+
+| Field | Value |
+|-------|-------|
+{{#if schema.$id}}| $id | `{{ schema.$id }}` |
+{{/if}}{{#if schema.$schema}}| $schema | `{{ schema.$schema }}` |
+{{/if}}{{#if schema.type}}| Type | `{{ schema.type }}` |
+{{/if}}
+
+{{#if schema.properties}}## Properties
+
+| Property | Type | Required | Description | Examples |
+|----------|------|----------|-------------|----------|
+{{#each schema.properties}}| **{{@key}}** | {{#if this.type}}`{{this.type}}`{{else if this.$ref}}Referenced{{else if this.oneOf}}OneOf{{else if this.anyOf}}AnyOf{{else if this.allOf}}AllOf{{else}}`any`{{/if}} | {{#if this.isRequired}}✅ Yes{{else}}❌ No{{/if}} | {{#if this.description}}{{this.description}}{{else}}-{{/if}} | {{#if this.examples}}{{#each this.examples}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}{{else}}-{{/if}} |
+{{/each}}
+
+{{/if}}{{#if example}}## Example
+
+```json
+{{{json example.data}}}
+```
+
+{{/if}}{{#if schema.examples}}{{#each schema.examples}}## Example{{#if this.meta:title}} - {{this.meta:title}}{{/if}}
+
+{{#if this.meta:description}}{{this.meta:description}}
+
+{{/if}}```json
+{{{jsonStripMeta this}}}
+```
+
+{{/each}}{{/if}}{{#if schema.properties}}---
+
+{{#each schema.properties}}{{> propertyDetails propertyKey=@key}}{{/each}}{{else}}{{> propertyDetails schema isRootLevelProperty=true}}{{/if}}
+
+{{#*inline "propertyDetails"}}{{#if (isNotDefined isRootLevelProperty)}}
+{{#if (isDefined parentKey)}}### {{parentKey}}.{{propertyKey}}{{else}}## {{propertyKey}}{{/if}}
+
+{{#if (isExternalRef this.$ref)}}*Defined in [{{this.$ref}}]({{this.$ref}})*
+
+{{/if}}**Details:**
+
+| Attribute | Value |
+|-----------|-------|
+{{#if this.$id}}| $id | `{{this.$id}}` |
+{{/if}}{{#if this.title}}| Title | {{this.title}} |
+{{/if}}{{#if this.description}}| Description | {{this.description}} |
+{{/if}}{{#if this.type}}| Type | `{{this.type}}` |
+{{/if}}{{#if (isDefined this.isRequired)}}| Required | {{#if this.isRequired}}✅ Yes{{else}}❌ No{{/if}} |
+{{/if}}{{#if this.default}}| Default | `{{this.default}}` |
+{{/if}}{{#if this.deprecated}}| Deprecated | ⚠️ {{this.deprecated}} |
+{{/if}}{{#if this.readOnly}}| Read Only | {{this.readOnly}} |
+{{/if}}{{#if this.writeOnly}}| Write Only | {{this.writeOnly}} |
+{{/if}}{{#if this.const}}| Constant Value | `{{this.const}}` |
+{{/if}}{{#if this.enum}}| Allowed Values | {{#if this.meta:enum}}{{#each this.meta:enum}}<br/>**{{@key}}**: {{this}}{{/each}}{{else}}{{#each this.enum}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}}{{/if}} |
+{{/if}}{{#if this.pattern}}| Pattern | `{{this.pattern}}` |
+{{/if}}{{#if this.format}}| Format | `{{this.format}}` |
+{{/if}}{{#if this.minimum}}| Minimum | {{this.minimum}} |
+{{/if}}{{#if this.maximum}}| Maximum | {{this.maximum}} |
+{{/if}}{{#if this.minLength}}| Min Length | {{this.minLength}} |
+{{/if}}{{#if this.maxLength}}| Max Length | {{this.maxLength}} |
+{{/if}}{{#if this.minItems}}| Min Items | {{this.minItems}} |
+{{/if}}{{#if this.maxItems}}| Max Items | {{this.maxItems}} |
+{{/if}}{{#if this.uniqueItems}}| Unique Items | {{this.uniqueItems}} |
+{{/if}}{{#if this.examples}}| Examples | {{#each this.examples}}`{{this}}`{{#unless @last}}, {{/unless}}{{/each}} |
+{{/if}}
+
+{{#unless (isDefined parentKey)}}{{#if this.properties}}#### Nested Properties
+
+{{#each this.properties}}{{> propertyDetails parentKey=../propertyKey propertyKey=@key}}{{/each}}{{/if}}{{/unless}}{{/if}}
+
+{{#unless (isExternalRef this.$ref)}}{{#if this.properties}}{{#each this.properties}}{{#if (isDefined ../parentKey)}}{{> propertyDetails parentKey=(concat ../parentKey '.' ../propertyKey) propertyKey=@key}}{{else}}{{> propertyDetails parentKey=../propertyKey propertyKey=@key}}{{/if}}{{/each}}{{/if}}{{#if this.items}}{{#unless (isDefined this.items.$ref)}}{{#each this.items.properties}}{{#if (isDefined ../parentKey)}}{{> propertyDetails parentKey=(concat ../parentKey '.' ../propertyKey) propertyKey=@key}}{{else}}{{> propertyDetails parentKey=../propertyKey propertyKey=@key}}{{/if}}{{/each}}{{/unless}}{{/if}}{{#if this.oneOf}}{{#each this.oneOf}}{{#if (isDefined ../parentKey)}}{{> propertyDetails parentKey=(concat ../parentKey '.' ../propertyKey) propertyKey=@key}}{{else}}{{> propertyDetails parentKey=../propertyKey propertyKey=@key}}{{/if}}{{/each}}{{/if}}{{#if this.allOf}}{{#each this.allOf}}{{#if (isDefined ../parentKey)}}{{> propertyDetails parentKey=(concat ../parentKey '.' ../propertyKey) propertyKey=@key}}{{else}}{{> propertyDetails parentKey=../propertyKey propertyKey=@key}}{{/if}}{{/each}}{{/if}}{{#if this.anyOf}}{{#each this.anyOf}}{{#if (isDefined ../parentKey)}}{{> propertyDetails parentKey=(concat ../parentKey '.' ../propertyKey) propertyKey=@key}}{{else}}{{> propertyDetails parentKey=../propertyKey propertyKey=@key}}{{/if}}{{/each}}{{/if}}{{/unless}}{{/inline}}

@@ -9,13 +9,16 @@
     "validate": "node scripts/validate-schemas.js",
     "test": "jest",
     "test:schemas": "jest tests/schema-validation.test.js",
-    "test:schema-quality": "jest tests/schema-quality.test.js"
+    "test:schema-quality": "jest tests/schema-quality.test.js",
+    "docs:generate": "node scripts/generate-docs.js",
+    "docs:clean": "rm -rf docs/schema-reference"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "glob": "^10.3.0",
     "jest": "^30.0.0",
+    "json-schema-static-docs": "^0.28.1",
     "prettier": "^3.0.0"
   },
   "keywords": [

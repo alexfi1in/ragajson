@@ -1,0 +1,69 @@
+const JsonSchemaStaticDocs = require("json-schema-static-docs")
+const path = require("path")
+const fs = require("fs")
+
+async function generateSchemaDocs() {
+  console.log("🚀 Generating JSON Schema documentation...")
+
+  const inputPath = path.join(__dirname, "..", "schema")
+  const outputPath = path.join(__dirname, "..", "docs", "schema-reference")
+
+  // Ensure output directory exists
+  if (!fs.existsSync(path.dirname(outputPath))) {
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true })
+  }
+
+  try {
+    const jsonSchemaStaticDocs = new JsonSchemaStaticDocs({
+      inputPath: inputPath,
+      outputPath: outputPath,
+      jsonSchemaVersion: "https://json-schema.org/draft/2020-12/schema",
+      inputFileGlob: "**/*.json",
+      createIndex: true,
+      indexPath: "index.md",
+      indexTitle: "RagaJSON Schema Reference",
+      addFrontMatter: true,
+      displaySchema: false, // Don't show raw JSON in docs
+      enableMetaEnum: true, // Support enum descriptions
+      ajvOptions: {
+        allowUnionTypes: true,
+        strict: false
+      }
+    })
+
+    await jsonSchemaStaticDocs.generate()
+
+    console.log("✅ Documentation generated successfully!")
+    console.log(`📁 Output location: ${outputPath}`)
+    console.log("📖 Main index: docs/schema-reference/index.md")
+
+    // Generate a summary of what was created
+    const files = getAllFiles(outputPath).filter(f => f.endsWith(".md"))
+    console.log(`📄 Generated ${files.length} documentation files:`)
+    files.forEach(file => {
+      const relativePath = path.relative(outputPath, file)
+      console.log(`   • ${relativePath}`)
+    })
+  } catch (error) {
+    console.error("❌ Error generating documentation:", error)
+    process.exit(1)
+  }
+}
+
+function getAllFiles(dirPath, arrayOfFiles = []) {
+  const files = fs.readdirSync(dirPath)
+
+  files.forEach(file => {
+    const fullPath = path.join(dirPath, file)
+    if (fs.statSync(fullPath).isDirectory()) {
+      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles)
+    } else {
+      arrayOfFiles.push(fullPath)
+    }
+  })
+
+  return arrayOfFiles
+}
+
+// Run the generation
+generateSchemaDocs()

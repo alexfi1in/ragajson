@@ -20,3 +20,10 @@ Thumbs.db
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+# Generated documentation
+docs/schema-reference/
+templates/custom/
+
+# Backup files
+*.backup
